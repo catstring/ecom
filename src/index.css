@@ -1,3 +1,7 @@
 Main {
     min-height: 80vh;
 }
+
+h3 {
+    padding: 1rem 0;
+}
