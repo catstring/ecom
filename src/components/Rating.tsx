@@ -1,7 +1,14 @@
-// import React from 'react'
-import PropTypes from 'prop-types';
+import React from 'react'
+// import PropTypes from 'prop-types';
 
-function Rating({ value, text, color}) {
+interface RatingProps {
+    value: number;
+    text: string;
+    color: string;
+}
+
+// const Rating: React.FC<{value:number; text: string; color: string}> = ({ value, text, color}) => {
+    const Rating: React.FC<RatingProps> = ({ value, text, color}) => {
   return (
     <div className="rating">
         <span>
@@ -59,10 +66,10 @@ function Rating({ value, text, color}) {
   )
 }
 
-Rating.propTypes = {
-    value: PropTypes.number,
-    text: PropTypes.string,
-    color: PropTypes.string,
-  };
+// Rating.propTypes = {
+//     value: PropTypes.number,
+//     text: PropTypes.string,
+//     color: PropTypes.string,
+//   };
 
 export default Rating

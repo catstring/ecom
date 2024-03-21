@@ -1,10 +1,23 @@
-// import React from 'react'
+import React, { FC } from 'react'
 import { Card } from 'react-bootstrap';
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
 
-function Product({ product }) {
+
+
+interface ProductProps {
+  product: {
+    _id: string;
+    image: string;
+    name: string;
+    rating: number;
+    numReviews: number;
+    price: number;
+  };
+}
+
+const Product: FC<ProductProps> = ({ product }) => {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`}>
@@ -30,15 +43,15 @@ function Product({ product }) {
   )
 }
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    numReviews: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-  }).isRequired,
-};
+// Product.propTypes = {
+//   product: PropTypes.shape({
+//     _id: PropTypes.string.isRequired,
+//     image: PropTypes.string.isRequired,
+//     name: PropTypes.string.isRequired,
+//     rating: PropTypes.number.isRequired,
+//     numReviews: PropTypes.number.isRequired,
+//     price: PropTypes.number.isRequired,
+//   }).isRequired,
+// };
 
 export default Product
