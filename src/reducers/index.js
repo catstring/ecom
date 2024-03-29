@@ -1,10 +1,10 @@
-import { combineReducers } from '@reduxjs/toolkit';
+// import { combineReducers } from '@reduxjs/toolkit';
 
-// Import your reducers here
-import productReducer from './productReducer';
+// // Import your reducers here
+// import productReducer from './productReducer';
 
-const rootReducer = combineReducers({
-    productReducer,
-});
+// const rootReducer = combineReducers({
+//     productReducer,
+// });
 
-export default rootReducer;
+// export default rootReducer;
