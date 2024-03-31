@@ -7,12 +7,12 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 
 function HomeScreen() {
-const product = useSelector((state) => state.product)
-const dispatch = useDispatch()
+    const product = useSelector((state) => state.product)
+    const dispatch = useDispatch()
 
-useEffect(() => {
-    dispatch(fetchProducts())
-},[dispatch])
+    useEffect(() => {
+        dispatch(fetchProducts())
+    },[dispatch])
 
     return (
         <div>

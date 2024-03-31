@@ -1,32 +1,46 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap'
 import Rating from '../components/Rating'
-// import products from '../product'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchDetails } from '../state/detailSlice'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
-import axios from 'axios'
+    function ProductScreen() {
+        const { id } = useParams()
+        const product = useSelector((state) => state.detail.products)
+        const loading = useSelector((state) => state.detail)
+        const dispatch = useDispatch()
 
-function ProductScreen() {
-    const { id } = useParams()
-    // const product = products.find((p) => p._id == id)
 
-    const [product, setProduct] = useState([])
+        useEffect(() => {
+            dispatch(fetchDetails(id))
+        },[dispatch, id])
 
-    useEffect(() => {
+    // const { id } = useParams()
+    // // const product = products.find((p) => p._id == id)
 
-        async function fetchProduct() {
-        const { data } = await axios.get(`/api/products/${id}`)
-        setProduct(data)
-        }
+    // const [product, setProduct] = useState([])
 
-        fetchProduct()
-        
-        }, [id])
+    // useEffect(() => {
+
+    //     async function fetchProduct() {
+    //     const { data } = await axios.get(`/api/products/${id}`)
+    //     setProduct(data)
+    //     }
+
+    //     fetchProduct()
+
+    //     }, [id])
 
     return (
         <div>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-            <Row>
+            {loading.loading ? <Loader />
+                : loading.error ? <Message variant='danger'>{loading.error}</Message>
+                :
+                <Row>
                 <Col md={6}>
                     <Image src={product.image} alt={product.name} fluid/>
                 </Col>
@@ -79,6 +93,9 @@ function ProductScreen() {
                     </Card>
                 </Col>
             </Row>
+            }
+
+            
         </div>
     )
 }
