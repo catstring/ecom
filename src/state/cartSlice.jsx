@@ -26,6 +26,11 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
     }
   };
 
+export const removeFromCart = (id) => (dispatch, getState) => {
+    dispatch(cartRemoveItem(id));
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+}
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -41,8 +46,13 @@ const cartSlice = createSlice({
           state.cartItems.push(item);
         }
       },
+      cartRemoveItem: (state, action) => {
+        const id = action.payload;
+        state.cartItems = state.cartItems.filter((x) => x.product !== id);
+      }
     },
   });
+
   
-export const { cartAddItem } = cartSlice.actions;
+export const { cartAddItem, cartRemoveItem } = cartSlice.actions;
 export default cartSlice.reducer;
