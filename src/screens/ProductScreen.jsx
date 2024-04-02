@@ -12,8 +12,8 @@ import Message from '../components/Message'
         const [qty, setQty] = useState(1)
 
         const { id } = useParams()
-        const detailProduct = useSelector((state) => state.detail.products)
         const detail = useSelector((state) => state.detail)
+        const { products } = detail
         const dispatch = useDispatch()
 
 
@@ -33,25 +33,25 @@ import Message from '../components/Message'
                 :
                 <Row>
                 <Col md={6}>
-                    <Image src={detailProduct.image} alt={detailProduct.name} fluid/>
+                    <Image src={products.image} alt={products.name} fluid/>
                 </Col>
 
                 <Col md={3}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h3>{detailProduct.name}</h3>
+                            <h3>{products.name}</h3>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <Rating value={detailProduct.rating} text={`${detailProduct.numReviews} reviews`} color={`#f8b825`}/>
+                            <Rating value={products.rating} text={`${products.numReviews} reviews`} color={`#f8b825`}/>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Price:{detailProduct.price}
+                            Price:{products.price}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Description:{detailProduct.description}
+                            Description:{products.description}
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -63,7 +63,7 @@ import Message from '../components/Message'
                                 <Row>
                                     <Col>Price:</Col>
                                     <Col>
-                                        <strong>${detailProduct.price}</strong>
+                                        <strong>${products.price}</strong>
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
@@ -72,12 +72,12 @@ import Message from '../components/Message'
                                 <Row>
                                     <Col>Status:</Col>
                                     <Col>
-                                        {detailProduct.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                                        {products.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                                     </Col>
                                     
                                 </Row>
                             </ListGroup.Item>
-                            {detailProduct.countInStock > 0 && 
+                            {products.countInStock > 0 && 
                                 <ListGroup.Item>
                                     <Row>
                                         <Col>Qty</Col>
@@ -103,7 +103,7 @@ import Message from '../components/Message'
                                 <Button
                                     onClick={addToCartHandler}
                                     className='btn-block' 
-                                    disabled={detailProduct.countInStock == 0}>
+                                    disabled={products.countInStock == 0}>
                                     ADD TO CART
                                 </Button>
                             </ListGroup>
