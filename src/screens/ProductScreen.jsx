@@ -1,16 +1,19 @@
-import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap'
-import Rating from '../components/Rating'
+import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchDetails } from '../state/detailSlice'
+import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
     function ProductScreen() {
+        const navigate = useNavigate()
+        const [qty, setQty] = useState(1)
+
         const { id } = useParams()
-        const product = useSelector((state) => state.detail.products)
-        const loading = useSelector((state) => state.detail)
+        const detailProduct = useSelector((state) => state.detail.products)
+        const detail = useSelector((state) => state.detail)
         const dispatch = useDispatch()
 
 
@@ -18,49 +21,37 @@ import Message from '../components/Message'
             dispatch(fetchDetails(id))
         },[dispatch, id])
 
-    // const { id } = useParams()
-    // // const product = products.find((p) => p._id == id)
-
-    // const [product, setProduct] = useState([])
-
-    // useEffect(() => {
-
-    //     async function fetchProduct() {
-    //     const { data } = await axios.get(`/api/products/${id}`)
-    //     setProduct(data)
-    //     }
-
-    //     fetchProduct()
-
-    //     }, [id])
+        const addToCartHandler = () => {
+            navigate(`/cart/${id}?qty=${qty}`)
+        }
 
     return (
         <div>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-            {loading.loading ? <Loader />
-                : loading.error ? <Message variant='danger'>{loading.error}</Message>
+            {detail.detail ? <Loader />
+                : detail.error ? <Message variant='danger'>{detail.error}</Message>
                 :
                 <Row>
                 <Col md={6}>
-                    <Image src={product.image} alt={product.name} fluid/>
+                    <Image src={detailProduct.image} alt={detailProduct.name} fluid/>
                 </Col>
 
                 <Col md={3}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h3>{product.name}</h3>
+                            <h3>{detailProduct.name}</h3>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            <Rating value={product.rating} text={`${product.numReviews} reviews`} color={`#f8b825`}/>
+                            <Rating value={detailProduct.rating} text={`${detailProduct.numReviews} reviews`} color={`#f8b825`}/>
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Price:{product.price}
+                            Price:{detailProduct.price}
                         </ListGroup.Item>
 
                         <ListGroup.Item>
-                            Description:{product.description}
+                            Description:{detailProduct.description}
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -72,7 +63,7 @@ import Message from '../components/Message'
                                 <Row>
                                     <Col>Price:</Col>
                                     <Col>
-                                        <strong>${product.price}</strong>
+                                        <strong>${detailProduct.price}</strong>
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
@@ -81,13 +72,40 @@ import Message from '../components/Message'
                                 <Row>
                                     <Col>Status:</Col>
                                     <Col>
-                                        {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                                        {detailProduct.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                                     </Col>
+                                    
                                 </Row>
                             </ListGroup.Item>
-
+                            {detailProduct.countInStock > 0 && 
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col>Qty</Col>
+                                        <Col xs='auto' className='my-1'>
+                                            <Form.Control
+                                                as="select"
+                                                value={qty}
+                                                onChange={(e) => setQty(e.target.value)}
+                                            >
+                                                {
+                                                    [...Array(detail.products.countInStock).keys()].map((x) => (
+                                                        <option key={x + 1} value={x + 1}>
+                                                            {x + 1}
+                                                        </option>
+                                                    ))
+                                                }
+                                            </Form.Control>
+                                        </Col>
+                                    </Row>
+                                </ListGroup.Item>
+                            }
                             <ListGroup>
-                                <Button className='btn-block' disabled={product.countInStock == 0}>ADD TO CART</Button>
+                                <Button
+                                    onClick={addToCartHandler}
+                                    className='btn-block' 
+                                    disabled={detailProduct.countInStock == 0}>
+                                    ADD TO CART
+                                </Button>
                             </ListGroup>
                         </ListGroup>
                     </Card>
