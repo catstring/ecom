@@ -26,9 +26,19 @@ export const fetchUsers = createAsyncThunk(
     }
 );
 
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo')
+    dispatch(userSlice.actions.logout())
+}
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
+    reducers: {
+        logout: (state) => { // Define the logout action
+            state.userInfo = null;
+        }
+    },
     extraReducers: builder => {
         builder.addCase(fetchUsers.pending, (state) => {
             state.loading = true
@@ -42,9 +52,6 @@ const userSlice = createSlice({
             state.loading = false
             state.userInfo = null
             state.error = action.error.message
-        })
-        builder.addCase('user/logout', (state) => {
-            state.userInfo = null
         })
     }
 })
