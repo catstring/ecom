@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const userInfoFromStorage = () =>
@@ -8,47 +8,44 @@ const userInfoFromStorage = () =>
 
 const initialState = {
     loading: false,
-    userInfo: userInfoFromStorage,
+    userInfo: userInfoFromStorage(),
     error: ''
 }
 
-export const userLogin = (email, password) => async (dispatch) => {
-    try {
-        dispatch(
-            userLogin.pending());
-        const response = await axios.post('/api/users/login', { 'username': email, 'password': password });
-        dispatch(
-            userLogin.fulfilled(
-                response.data
-                ));
-    } catch (error) {
-        dispatch(
-            userLogin.rejected({ 
-                error: error.message 
-            }));
+export const fetchUsers = createAsyncThunk(
+    'user/fetchUsers',
+    async ({ email, password }, { rejectWithValue }) => {
+        try {
+            // console.log(email, password)
+            const response = await axios.post('/api/users/login/', { 'username': email, 'password': password });
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
     }
-};
+);
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {
-        userLogin: {
-            pending: (state) => {
-              state.loading = true;
-              state.error = '';
-            },
-            fulfilled: (state, action) => {
-              state.loading = false;
-              state.userInfo = action.payload;
-              state.error = '';
-            },
-            rejected: (state, action) => {
-              state.loading = false;
-              state.userInfo = null;
-              state.error = action.error.message;
-            }   
-        }
+    extraReducers: builder => {
+        builder.addCase(fetchUsers.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(fetchUsers.fulfilled, (state, action) => {
+            state.loading = false
+            state.userInfo = action.payload
+            state.error = ''
+        })
+        builder.addCase(fetchUsers.rejected, (state, action) => {
+            state.loading = false
+            state.userInfo = null
+            state.error = action.error.message
+        })
+        builder.addCase('user/logout', (state) => {
+            state.userInfo = null
+        })
     }
 })
 
