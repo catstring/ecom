@@ -3,17 +3,16 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-import HomeScreen from './screens/HomeScreen'
-import ProductScreen from './screens/ProductScreen'
-import CartScreen from './screens/CartScreen'
-import LoginScreen from './screens/LoginScreen'
-import RegisterScreen from './screens/RegisterScreen'
+// import HomeScreen from './screens/HomeScreen'
+// import ProductScreen from './screens/ProductScreen'
+// import CartScreen from './screens/CartScreen'
+// import LoginScreen from './screens/LoginScreen'
+// import RegisterScreen from './screens/RegisterScreen'
 import TestScreen from './screens/TestScreen'
 
 function App() {
 
   return (
-    <>
       <Router>
         <Header />
           <main className='py-3'>
@@ -30,7 +29,6 @@ function App() {
           </main>
         <Footer />
       </Router>
-    </>
   )
 }
 
