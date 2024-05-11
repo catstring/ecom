@@ -8,7 +8,7 @@ import ProductScreen from './screens/ProductScreen'
 import CartScreen from './screens/CartScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
-// import TestScreen from './screens/TestScreen'
+import TestScreen from './screens/TestScreen'
 
 function App() {
 
