@@ -17,7 +17,7 @@ function HomeScreen() {
     return (
         <div>
         <h1>Latest Products</h1>
-        {/* {product.loading ? <Loader />
+        {product.loading ? <Loader />
             : product.error ? <Message variant='danger'>{product.error}</Message>
             :
             <Row>
@@ -27,7 +27,7 @@ function HomeScreen() {
                 </Col>
                 ))}
             </Row>
-            } */}
+            }
         
         </div>
     )
