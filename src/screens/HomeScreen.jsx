@@ -17,18 +17,17 @@ function HomeScreen() {
     return (
         <div>
         <h1>Latest Products</h1>
-        {product.loading ? <Loader />
+        {/* {product.loading ? <Loader />
             : product.error ? <Message variant='danger'>{product.error}</Message>
             :
             <Row>
             {product.products.map((product) => (
                 <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                {/* <Product product={{...product, _id: product._id.toString()}}/> */}
                 <Product product={product}/>
                 </Col>
                 ))}
             </Row>
-            }
+            } */}
         
         </div>
     )
