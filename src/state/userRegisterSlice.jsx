@@ -11,7 +11,7 @@ export const registerUsers = createAsyncThunk(
     'user/registerUsers',
     async ({ name, email, password }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('/api/users/register/', { 'name': name, 'email': email, 'password': password });
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/users/register/`, { 'name': name, 'email': email, 'password': password });
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             return response.data;
         } catch (error) {

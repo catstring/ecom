@@ -17,7 +17,7 @@ export const fetchUsers = createAsyncThunk(
     async ({ email, password }, { rejectWithValue }) => {
         try {
             // console.log(email, password)
-            const response = await axios.post('/api/users/login/', { 'username': email, 'password': password });
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/users/login/`, { 'username': email, 'password': password });
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             return response.data;
         } catch (error) {
