@@ -1,22 +1,37 @@
-// import React from 'react'
+import { useState, useEffect } from 'react';
 
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchProducts } from "../state/productSlice"
+function FetchTextScreen() {
+    const [data, setData] = useState('Loading...');
+    const [error, setError] = useState(null);
 
-function TestScreen() {
-  const product = useSelector((state) => state.product)
-  const dispatch = useDispatch()
+    useEffect(() => {
+        const apiUrl = 'https://ecom-backend-python-production.up.railway.app/api/products'; // Replace with your actual API URL
 
-  useEffect(() => {
-      dispatch(fetchProducts())
-  },[dispatch])
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(text => {
+                setData(text);
+            })
+            .catch(err => {
+                setError('Failed to load data: ' + err.message);
+                console.error("Error fetching data: ", err);
+            });
 
-  return (
-    <div>
-      Test
-    </div>
-  )
+    }, []); // Empty dependency array ensures this effect runs only once after the initial render
+
+    return (
+        <div>
+            <h1>API Response</h1>
+            <div>
+                {error ? <p>Error: {error}</p> : <p>{data}</p>}
+            </div>
+        </div>
+    );
 }
 
-export default TestScreen
+export default FetchTextScreen;
