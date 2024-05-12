@@ -7,12 +7,20 @@ const initialState = {
     error: ''
 }
 
-export const fetchProducts = createAsyncThunk('product/fetchProducts', () => {
-    return axios
-        .get('/api/products/')
-        // .then(response => response.data.map(user => user.id))
-        .then(response => response.data)
-})
+export const fetchProducts = createAsyncThunk('product/fetchProducts', async () => {
+    // const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/products`);
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
+    return response.data;
+  });
+
+// export const fetchProducts = createAsyncThunk('product/fetchProducts', () => {
+//     return axios
+//         .get('/api/products/')
+//         // .get('https://ecom-backend-python-production.up.railway.app/api/products/')
+
+//         // .then(response => response.data.map(user => user.id))
+//         .then(response => response.data)
+// })
 
 const productListSlice = createSlice({
     name: 'product',
