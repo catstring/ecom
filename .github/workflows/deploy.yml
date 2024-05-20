@@ -1,0 +1,51 @@
+name: Deploy Vite React to AWS EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+    - name: Install dependencies on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@54.253.52.106 << 'EOF'
+          sudo yum update -y
+          sudo yum install -y git nginx
+          sudo systemctl start nginx
+          sudo systemctl enable nginx
+          sudo mkdir -p /var/www/ecom-front-react
+          sudo chown -R ec2-user:ec2-user /var/www/ecom-front-react
+          sudo chmod -R 775 /var/www/ecom-front-react
+        EOF
+
+    - name: Deploy to EC2
+      run: |
+        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" * ec2-user@54.253.52.106:/var/www/ecom-front-react/
+        ssh -o StrictHostKeyChecking=no ec2-user@54.253.52.106 << 'EOF'
+          sudo chown -R nginx:nginx /var/www/ecom-front-react
+          sudo systemctl restart nginx
+        EOF
+

@@ -5,6 +5,7 @@ import reactRefresh from '@vitejs/plugin-react-refresh';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  base: '/ecom/',
   plugins: [
     react(),  // Setup React with fast refresh
     reactRefresh(),
