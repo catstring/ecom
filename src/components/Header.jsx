@@ -16,19 +16,19 @@ function Header() {
     const logoutHandler = () => {
         dispatch(logout());
     }
-
+    const baseURL = 'ecom/'
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
                 <Container>
-                    <LinkContainer to="/">
+                    <LinkContainer to={baseURL}>
                         {/* <Navbar.Brand href="/">ProShop</Navbar.Brand> */}
                         <Navbar.Brand>ProShop</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <LinkContainer to="/cart">
+                            <LinkContainer to={`${baseURL}cart/`}>
                                 <Nav.Link>
                                     <i className="fas fa-shopping-cart"></i>Cart
                                 </Nav.Link>
@@ -36,7 +36,7 @@ function Header() {
 
                             {userInfo ? (
                                 <NavDropdown title={userInfo.name} id="username">
-                                    <LinkContainer to="/profile">
+                                    <LinkContainer to={`${baseURL}profile/`}>
                                         <NavDropdown.Item>Profile</NavDropdown.Item>
                                     </LinkContainer>
                                     <NavDropdown.Item onClick={logoutHandler}>
@@ -44,7 +44,7 @@ function Header() {
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             ) : (
-                                <LinkContainer to="/login">
+                                <LinkContainer to={`${baseURL}login/`}>
                                     <Nav.Link>
                                         <i className="fas fa-user"></i>Login
                                     </Nav.Link>
