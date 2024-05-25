@@ -12,7 +12,7 @@ const initialState = {
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
     try {
-        const { data } = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products/${id}`);
+        const { data } = await axios.get(`/api/products/${id}`);
         dispatch(
             cartAddItem({
                 product: data._id,

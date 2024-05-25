@@ -5,7 +5,7 @@ function FetchTextScreen() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const apiUrl = 'https://ecom-backend-python-production.up.railway.app/api/products'; // Replace with your actual API URL
+        const apiUrl = 'https://toddmctsai.me/ecom/api/products'; // Replace with your actual API URL
 
         fetch(apiUrl)
             .then(response => {
