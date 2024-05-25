@@ -11,7 +11,7 @@ import RegisterScreen from './screens/RegisterScreen'
 // import TestScreen from './screens/TestScreen'
 
 function App() {
-  const baseURL = ''
+  const baseURL = '/ecom'
   return (
       <Router>
         <Header />
