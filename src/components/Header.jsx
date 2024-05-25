@@ -16,7 +16,7 @@ function Header() {
     const logoutHandler = () => {
         dispatch(logout());
     }
-    const baseURL = 'ecom/'
+    const baseURL = ''
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>

@@ -11,7 +11,7 @@ import RegisterScreen from './screens/RegisterScreen'
 // import TestScreen from './screens/TestScreen'
 
 function App() {
-  const baseURL = '/ecom'
+  const baseURL = ''
   return (
       <Router>
         <Header />
@@ -19,7 +19,7 @@ function App() {
             <Container>
               <Routes>
                 {/* <Route path='/' element={<TestScreen/>} /> */}
-                <Route path={baseURL} element={<HomeScreen/>} exact />
+                <Route path={`${baseURL}/`} element={<HomeScreen/>} exact />
                 <Route path={`${baseURL}/login`} element={<LoginScreen/>} />
                 <Route path={`${baseURL}/register`} element={<RegisterScreen/>} />
                 <Route path={`${baseURL}/product/:id`} element={<ProductScreen/>} />
