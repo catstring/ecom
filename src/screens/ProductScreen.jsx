@@ -29,12 +29,12 @@ function ProductScreen() {
     }, [dispatch, id]);
 
     const addToCartHandler = () => {
-        navigate(`/cart/${id}?qty=${qty}`);
+        navigate(`/ecom/cart/${id}?qty=${qty}`);
     };
 
     return (
         <div>
-            <Link to="/" className="btn btn-light my-3">
+            <Link to="/ecom/" className="btn btn-light my-3">
                 Go Back
             </Link>
             {detail.detail ? (

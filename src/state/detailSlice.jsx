@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchDetails = createAsyncThunk('product/fetchDetails', (id) => {
     return axios
-        .get(`/api/products/${id}`)
+        .get(`/ecom-api/api/products/${id}`)
         .then(response => response.data)
 })
 

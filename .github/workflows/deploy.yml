@@ -27,13 +27,13 @@ jobs:
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+        ssh-private-key: ${{ secrets.EC2_NEWKEY }}
 
     - name: Install dependencies on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.253.52.106 << 'EOF'
-          sudo yum update -y
-          sudo yum install -y git nginx
+        ssh -o StrictHostKeyChecking=no ec2-user@13.210.154.160 << 'EOF'
+          # sudo yum update -y
+          # sudo yum install -y git nginx
           sudo systemctl start nginx
           sudo systemctl enable nginx
           sudo mkdir -p /var/www/ecom-front-react
@@ -43,8 +43,8 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" * ec2-user@54.253.52.106:/var/www/ecom-front-react/
-        ssh -o StrictHostKeyChecking=no ec2-user@54.253.52.106 << 'EOF'
+        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" * ec2-user@13.210.154.160:/var/www/ecom-front-react/
+        ssh -o StrictHostKeyChecking=no ec2-user@13.210.154.160 << 'EOF'
           sudo chown -R nginx:nginx /var/www/ecom-front-react
           sudo systemctl restart nginx
         EOF

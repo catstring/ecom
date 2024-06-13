@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk('product/fetchProducts', async () => {
     // const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/products`);
-    const response = await axios.get(`/api/products`);
+    const response = await axios.get(`/ecom-api/api/products`);
     return response.data;
   });
 
